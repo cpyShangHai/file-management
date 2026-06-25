@@ -1,0 +1,63 @@
+{
+  "name": "cpy-file-manager",
+  "version": "1.0.0",
+  "description": "轻量级桌面文件管理系统 — Vue3 + Electron",
+  "main": "desktop/main.js",
+  "author": "cpy",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on http://127.0.0.1:5173 && cross-env NODE_ENV=development node desktop/launch.js\"",
+    "build:web": "vite build",
+    "start": "npm run build:web && cross-env NODE_ENV=production node desktop/launch.js",
+    "electron": "node desktop/launch.js",
+    "build": "vite build && electron-builder",
+    "build:mac": "vite build && electron-builder --mac",
+    "build:win": "vite build && electron-builder --win"
+  },
+  "dependencies": {
+    "basic-ftp": "^6.0.1",
+    "iconv-lite": "^0.7.2",
+    "ssh2-sftp-client": "^12.1.1",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "vite": "^6.0.7",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "com.cpy.filemanager",
+    "productName": "文件管理",
+    "icon": "build/icon.jpg",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "desktop/**/*",
+      "dist/**/*",
+      "build/icon.jpg",
+      "package.json"
+    ],
+    "asar": true,
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "identity": null
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
